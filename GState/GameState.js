@@ -11,6 +11,7 @@ function GameState() {
 	this.listOfPeopleWithTasks = {};
 	this.numParticipants = 0;
 	this.numStarted = 0;
+	this.taskLists = {};
 	
 	/*Fetches the Task*/
 	function fetchTasks(taskUrl){
@@ -87,30 +88,30 @@ function GameState() {
     	return o;
 		};
 
-
-		var i = 0;
-		var taskLists = {};
-		for(var j =0; j < numPlayers; j++) {
-			taskLists[this.players[j]] = {};
-			taskLists[this.players[j]].tasklist = [];
+		if(numStarted  <= 1) {
+			var i = 0;
+			for(var j =0; j < numPlayers; j++) {
+				taskLists[this.players[j]] = {};
+				taskLists[this.players[j]].tasklist = [];
+			}
+			this.listOfFuncs = shuffle(this.listOfFuncs);
+			var newFuncs = [];
+			while(i<numPlayers*4){
+				var id = this.players[Math.floor(i/4)];
+				taskLists[id].tasklist.push(this.listOfFuncs[i]);
+				this.listOfPeopleWithTasks[id] = false;
+				newFuncs.push(this.listOfFuncs[i]);
+				this.listOfExpirations[this.listOfFuncs[i].name] = this.listOfFuncs[i];
+				i++;
+			}
+			this.listOfFuncs = newFuncs;
 		}
-		this.listOfFuncs = shuffle(this.listOfFuncs);
-		var newFuncs = [];
-		while(i<numPlayers*4){
-			var id = this.players[Math.floor(i/4)];
-			taskLists[id].tasklist.push(this.listOfFuncs[i]);
-			this.listOfPeopleWithTasks[id] = false;
-			newFuncs.push(this.listOfFuncs[i]);
-			this.listOfExpirations[this.listOfFuncs[i].name] = this.listOfFuncs[i];
-			i++;
-		}
-		this.listOfFuncs = newFuncs;
 
-		for (var j = 0; j < numPlayers; j++) {
+		//for (var j = 0; j < numPlayers; j++) {
 			//generate the task list for each people
 
-			generateTask(taskLists[this.players[j]].tasklist);
-		}
+			generateTask(taskLists[localParticipant.id].tasklist);
+		//}
 
 		this.update();
 
