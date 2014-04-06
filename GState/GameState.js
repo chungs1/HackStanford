@@ -16,10 +16,10 @@ function GameState() {
 		var taskLists = {};
 		var check = {};
 
-		for(int i = 0; i < this.players.length; i++) {
+		for(var i = 0; i < this.players.length; i++) {
 			taskLists[this.players[i]] = {};
 			taskLists[this.players[i]].tasklist = [];
-			for(int j = 0; j < 4; j++) {
+			for(var j = 0; j < 4; j++) {
 				var randomFunc = Math.floor(Math.random()*3);
 				var possibleFunc = this.listOfFuncs[randomFunc];
 
@@ -36,9 +36,6 @@ function GameState() {
 			}
 		}
 
-		setValue("tasklist", taskLists);
-		render();
-
 		update();
 
 	}
@@ -48,21 +45,21 @@ function GameState() {
 		for (var i = 0; i < addedKeys.length; i++) {
 			var key = addedKeys[i];
 			checkTaskComplete();
-			sendNewFunc();
 		};
+
+		//remove from sharedstate old completed tasks
+		gapi.hangouts.data.submitDelta({}, addedKeys);
+
 
 		//if your health goes below;
 		if (this.overallHealth <= 0) {
 			end("YOU LOST!!!!!");
 		}
 
-		sendNewFunc();
+
 
 	}
 
-	function sendNewFunc() {
-
-	}
 
 	//the main function
 	function checkTaskComplete(taskObject) {
@@ -75,15 +72,17 @@ function GameState() {
 		}
 	}
 
-	function randomizeFunc() {
+	function randomizeFunc(person_id) {
 		var randomID = listOfFuncs[randomizeNum("func")]+randomizeNum("number");
 		var itemToSend = {randomID: {}};
 		itemToSend.randomID.startTime = Date.now();
 		itemToSend.randomID.timeDur = this.timeDur;
+		itemToSend.randomID.person_id = person_id;
 
 		this.listOfExpirations[randomID] = {};
 		this.listOfExpirations[randomID].startTime = itemToSend.randomID.startTime;
 
+		return itemToSend;
 
 	}
 
@@ -125,12 +124,6 @@ function updateLocalDataState(state, metadata, addedKeys, game) {
 				gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
           updateLocalDataState(stateChangeEvent.state,
                                stateChangeEvent.metadata, game);
-        });
-
-        //if another person enters or leaves, abort the mission by ending
-				gapi.hangout.onParticipantsChanged.add(function(partChangeEvent) {
-          game.end("WE'VE BEEN DETECTED, ABORT MISSION");
-          console.log("game ended");
         });
 
         //if there is no initial game state, then get the shared state
