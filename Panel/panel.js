@@ -3,10 +3,14 @@
 var json = '{"name":"seduce male secretary","type":"button","action":"seduce","subject":"male secretary"}';
 var action_obj = JSON.parse(json);
 
-json = '{"name": "Calbots invisishield","type": "select","subject":"calbots invisishield","options": [0,1,2,3]}';
+json = '{"name": "calbots invisishield","type": "select","subject":"calbots invisishield","options": [1,2,3,4]}';
 var select_obj = JSON.parse(json);
 
-var obj_arr = [action_obj,select_obj];
+
+json='{"name": "bribe ","type": "slider","min_value":0,"max_value":10}';
+var slider_obj = JSON.parse(json);
+
+var obj_arr = [action_obj,select_obj,slider_obj];
 function pusher_timer() {
   var pusher = new Pusher('70931')
   var uID = p-1;
@@ -27,20 +31,20 @@ channel.bind('update', function(data) { // Bind to an event on our channel, in o
 
 //task_in is Task json object (list of four)
 function generateTask(tasks_in) {
-    for (var i = 0; i<=1; i++) {
+    for (var i = 0; i<=2; i++) {
         //change title of each subpanel
 
 
         var title = "h2_"+(i+1) + "";
         var curtask = tasks_in[i];
         console.log(curtask);
-        document.getElementById(title).innerHTML=curtask.subject;
+        document.getElementById(title).innerHTML=curtask.name;
         if (curtask.type == "button") {
             // create button
              var new_button = $('<button />')
                 .addClass('bluebutton')
                 .text(curtask.action)
-                //.mousedown(onbuttonClick()) //do something
+                //.mousedown(alert("hello")) //do something
                 .insertAfter( "."+title +"");
 
         
@@ -49,30 +53,44 @@ function generateTask(tasks_in) {
         
         else if (curtask.type=="select") {
             //create four selection buttons
-            for (var s = 1; s <=4; s++) {
-                console.log('here');
+            for (var s = 0; s <=3; s++) {
                  var new_button = $('<button />')
                 .addClass('smallbutton')
-                .text(curtask.options[i])
+                .text(curtask.options[s])
                 //.mousedown(onselectClick()); //do something
-                 .insertAfter(".smallbutton");
+                .insertAfter( "."+title +"");
             }
                
         }
         
         
-        else if (curtask.type=="slider") {            
+        else if (curtask.type=="slider") {
+            $("."+title +"").append("<p>amount:</p>"+"<p id='sliderTicker'>0</p>" );
             var new_button = $('<input />')
                 .attr({
                     'id': 'sliderinput',
                     'type': 'range',
                     'min':curtask.min_value,
-                    'max':curtask.max_value
-                });
+                    'max':curtask.max_value,
+                    'class':'slider',
+                    'onmouseup':"updateTicker(this)"
+                })
+                //.mouseup(console.log("change"))
+                .insertAfter( "."+title +"");
+
 
         }
     }
 }
 
+function updateTicker(button){
+    $("#sliderTicker").text(button.value);
+}
+
+
+
+function textin(task) {
+    document.getElementById(task).innerHTML=curtask.command;
+}
 
  
