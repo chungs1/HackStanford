@@ -1,5 +1,5 @@
 /*https://github.com/pusher/real-time-progress-bar-tutorial/blob/master/public/js/home.js*/
-
+/*
 var json = '{"name":"seduce male secretary","type":"takeaction","action":"seduce","subject":"male secretary"}';
 var action_obj = JSON.parse(json);
 
@@ -9,7 +9,7 @@ var slider_obj = JSON.parse(json);
 json = '{"name": "calbots invisishield","type": "select","subject":"calbots invisishield","options": [1,2,3,4], "answer":3}';
 var select_obj = JSON.parse(json);
 
-
+*/
 
 
 var obj_arr = [action_obj,select_obj,slider_obj];

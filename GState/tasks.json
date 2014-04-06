@@ -6,17 +6,17 @@
 	"subject": "male secretary"
 },
 {
-	"name": "break firewall",
+	"name": "storm beachfront",
 	"type": "takeaction",
-	"action": "break",
-	"subject": "firewall"
+	"action": "storm",
+	"subject": "beachfront"
 
 },
 {
-	"name": "shit on Debra's desk",
+	"name": "recycle waterbottles",
 	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Debra's desk"
+	"action": "recycle",
+	"subject": "waterbottles"
 },
 {
 	"name": "TCP Port Scan",
@@ -51,5 +51,46 @@
 	"name": "permissions",
 	"type": "select",
 	"options": [0,1,2,3]
+},
+{
+	"name": "spoof IP address",
+	"type": "takeaction",
+	"action": "Spoof",
+	"subject": "IP address"
+},
+{
+	"name": "unhash passwords",
+	"type": "takeaction",
+	"action": "unhash",
+	"subject": "passwords"
+},
+{
+	"name": "Willpower",
+	"type": "slider",
+	"min_value": 0,
+	"max_value": 3
+},
+{
+	"name": "consume energy drinks",
+	"type": "takeaction",
+	"action": "consume",
+	"subject": "energy drinks"
+},
+{
+	"name": "stealth mode",
+	"type": "select",
+	"options": ["Cal", "Stanford"]
+},
+{
+	"name": "take out trash",
+	"type": "takeaction",
+	"action": "take out",
+	"subject": "trash"
+},
+{
+	"name": "whiteboard solutions",
+	"type": "takeaction",
+	"action": "whiteboard",
+	"subject": "solutions"
 }
 ]
