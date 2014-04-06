@@ -9,6 +9,8 @@ function GameState() {
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
 	this.listOfPeopleWithTasks = {};
+	this.numParticipants = 0;
+	this.numStarted = 0;
 	
 	/*Fetches the Task*/
 	function fetchTasks(taskUrl){
@@ -70,6 +72,11 @@ function GameState() {
 
 	//now we start
 	this.start = function() {
+		this.numStarted+=1;
+		if(this.numStarted > 1) {
+			generateTask(taskLists[localParticipant.id].tasklist);
+			return;
+		}
 		this.players = gapi.hangout.getParticipants();
 		localParticipant = gapi.hangout.getLocalParticipant()
 		var taskLists = {};
@@ -79,7 +86,7 @@ function GameState() {
 		function shuffle(o){ //v1.0
     	for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     	return o;
-			};
+		};
 
 
 		var i = 0;
@@ -211,6 +218,7 @@ function updateLocalDataState(state, metadata, addedKeys) {
 
  var game = new GameState();
 
+
 (function() {
 	//console.log("initializing..");
 	if(gapi && gapi.hangout) {
@@ -222,6 +230,10 @@ function updateLocalDataState(state, metadata, addedKeys) {
 				gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
           updateLocalDataState(stateChangeEvent.state,
                                stateChangeEvent.metadata, stateChangeEvent.addedKeys);
+        });
+
+        gapi.hangout.data.onParticipantsEnabled.add(function(stateChangeEvent) {
+        	game.numParticipants++;
         });
 
         //if there is no initial game state, then get the shared state
