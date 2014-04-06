@@ -34,8 +34,6 @@ function GameState() {
 
 		this.listOfExpirations[randomID] = {};
 		this.listOfExpirations[randomID].startTime = itemToSend.randomID.startTime;
-
-
 	}
 
 	function randomizeNum(option) {
