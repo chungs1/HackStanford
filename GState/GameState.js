@@ -6,6 +6,7 @@ function GameState() {
 	this.players = [];
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
+	this.listOfPeopleWithTasks = {};
 	this.listOfFuncs = [{
 	"name": "break firewall",
 	"type": "takeaction",
@@ -18,6 +19,42 @@ function GameState() {
 	"type": "takeaction",
 	"action": "shit on",
 	"subject": "Debra's desk"
+},
+{
+	"name": "shit on Patt's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Patt's desk"
+},
+{
+	"name": "shit on James's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "James's desk"
+},
+{
+	"name": "shit on Kyle's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Kyle's desk"
+},
+{
+	"name": "shit on Pappy's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Pappy's desk"
+},
+{
+	"name": "shit on Menora's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Menora's desk"
+},
+{
+	"name": "shit on Carl's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Carl's desk"
 }];
 	var	that = [];
 	/*console.log("before " + that);
@@ -51,7 +88,8 @@ function GameState() {
 		this.players = gapi.hangout.getParticipants();
 		var taskLists = {};
 		var check = {};
-		for(var i = 0; i < this.players.length; i++) {
+		for(var i = 0; i < this.players.length; i++) { //2 players for 
+			this.listOfPeopleWithTasks[this.players[i].id] = false;
 			taskLists[this.players[i]] = {};
 			taskLists[this.players[i]].tasklist = [];
 			for(var j = 0; j < 4; j++) {
@@ -77,18 +115,20 @@ function GameState() {
 
 	//this updates the render and sends instructions.
 	this.update = function() {
+		var peopleID =  Object.keys(this.listOfPeopleWithTasks);
+
 		for (var i = 0; i < addedKeys.length; i++) {
 			var key = addedKeys[i];
 			checkTaskComplete();
 		};
 
-		if(this.listOfExpirations.length == 0) {
-
-		}
-
-		// here I make a new task and then send it and take away the old things
-		var newTask;
-
+		for (var i = 0; i < peopleID.length; i++) {
+			//if the person doesn't have a task, 
+			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
+				var task = randomizeNum(peopleID[i]);
+				gapi.hangouts.data.setValue(task[0].name, task[0]);
+			}
+		} 
 
 		//remove from sharedstate old completed tasks
 		gapi.hangouts.data.submitDelta({}, addedKeys);
@@ -109,22 +149,21 @@ function GameState() {
 		//if the thing in the array isn't undefined
 		if (this.listOfExpirations[taskObject.task_id] != undefined) {
 			//if it's greater than the duration time
-			if (taskObject.endTime - this.listOfExpirations[taskObject.task_id].startTime > this.timeDur) {
+			if (Date.now() > this.listOfExpirations[taskObject.task_id].expiration.getMilliseconds()) {
 				this.overallHealth = this.overallHealth - 10;
+				this.listOfPeopleWithTasks[taskObject.userId] = false;
 			}
 		}
 	}
 
 	function randomizeFunc(person_id) {
-		var randomID = listOfFuncs[randomizeNum("func")]+randomizeNum("number");
-		var itemToSend = {randomID: {}};
-		itemToSend.randomID.startTime = Date.now();
-		itemToSend.randomID.timeDur = this.timeDur;
-		itemToSend.randomID.person_id = person_id;
+		var randomID = listOfFuncs[randomizeNum("func")];
+		var task = initializeTask(randomID, person_id);
+		var itemToSend = {randomID.name: task};
 
-		this.listOfExpirations[randomID] = {};
-		this.listOfExpirations[randomID].startTime = itemToSend.randomID.startTime;
-
+		this.listOfExpirations[randomID.name] = task;
+		this.listOfPeopleWithTasks[person_id] = true;
+		
 		return itemToSend;
 
 	}
