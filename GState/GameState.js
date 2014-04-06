@@ -11,7 +11,7 @@ function GameState() {
 	this.addedKeys = null;
 
 	//now we start
-	function start() {
+	this.start = function() {
 		this.players = gapi.hangout.getParticipants();
 		var taskLists = {};
 		var check = {};
@@ -41,11 +41,19 @@ function GameState() {
 	}
 
 	//this updates the render and sends instructions.
-	function update() {
+	this.update = function() {
 		for (var i = 0; i < addedKeys.length; i++) {
 			var key = addedKeys[i];
 			checkTaskComplete();
 		};
+
+		if(this.listOfExpirations.length == 0) {
+
+		}
+
+		// here I make a new task and then send it and take away the old things
+		var newTask;
+
 
 		//remove from sharedstate old completed tasks
 		gapi.hangouts.data.submitDelta({}, addedKeys);
