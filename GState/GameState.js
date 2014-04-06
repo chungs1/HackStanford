@@ -1,9 +1,10 @@
-var participants
+var localParticipant = null;
 
 function GameState() {
 	//this.level = 1;
 	this.taskUrl = 'https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/tasks.json'
 	this.win = false;
+	this.numComplete = 0;
 	this.players = []; 
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
@@ -70,6 +71,7 @@ function GameState() {
 	//now we start
 	this.start = function() {
 		this.players = gapi.hangout.getParticipants();
+		localParticipant = gapi.hangout.getLocalParticipant()
 		var taskLists = {};
 		var check = {};
 		var numPlayers = this.players.length;
@@ -100,7 +102,7 @@ function GameState() {
 
 		for (var j = 0; j < numPlayers; j++) {
 			//generate the task list for each people
-			generate_task(taskLists[this.player[j].tasklist);
+			generate_task(taskLists[this.player[j]].tasklist);
 		}
 
 		this.update();
@@ -122,11 +124,16 @@ function GameState() {
 			delete this.listOfExpirations[name];
 		};
 
+		if(this.numComplete >= 10) {
+			end("win");
+		}
+
 		for (var i = 0; i < peopleID.length; i++) {
 			//if the person doesn't have a task, 
 			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
 				var task = this.randomizeFunc(peopleID[i]);
 				//console.log(task);
+				textin(JSON.stringify(task));
 				gapi.hangout.data.setValue(task["name"].name, JSON.stringify(task["name"]));
 			}
 		} 
@@ -155,7 +162,9 @@ function GameState() {
 			if (Date.now() > this.listOfExpirations[taskObject.task_id].expiration.getMilliseconds()) {
 				this.overallHealth = this.overallHealth - 10;
 				this.listOfPeopleWithTasks[taskObject.userId] = false;
-			// }
+			} else {
+				this.numComplete += 1;
+			}
 		}
 	}
 
@@ -183,8 +192,12 @@ function GameState() {
 
 	function end(message) {
 		//render("Lose"); //see the lose screen
-		console.log("YOU LOSE");
-		alert("YOU LOSE");
+		if(message = "win") {
+			alert("YOU WINNNNNNNNNN YAYA");
+		} else {
+			console.log("YOU LOSE");
+			alert("YOU LOSE");
+		}
 	}
 
 }
