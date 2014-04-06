@@ -246,7 +246,6 @@ function updateLocalDataState(state, metadata, addedKeys) {
           }
         }
         gapi.hangout.onApiReady.remove(initHangout);
-        game.start();
 			}
 		}
 		gapi.hangout.onApiReady.add(initHangout);
