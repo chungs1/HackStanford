@@ -74,7 +74,6 @@ function GameState() {
 	this.start = function() {
 		this.numStarted+=1;
 		if(this.numStarted > 1) {
-			generateTask(taskLists[localParticipant.id].tasklist);
 			return;
 		}
 		this.players = gapi.hangout.getParticipants();
