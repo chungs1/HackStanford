@@ -19,10 +19,6 @@
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<!-- required Pusher library for the realtime magic  -->
-<script src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/pusher.js"></script>
-
-
 <!-- Gamestate.js --> 
 <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/GameState.js"></script> 
 
@@ -37,12 +33,9 @@
 <h3>Crucial Task: </h3><h3 id = "task"><span>|</span></h3>
 
 <hr>
-<div class="progress" id ="realtime_prog">
-    <progress value="0" max="100"></progress>
-  </div>
- <span class="sr-only" id = "time_msg"></span>
-</div>
-
+<span id="timer" color="red">
+      <b id="timer"></b>     
+</span>
 
 
 <table cellspacing = "2" cell padding = "0" width="100%">
