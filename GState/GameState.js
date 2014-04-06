@@ -9,12 +9,12 @@ function GameState() {
 	this.state = null;
 	this.metadata = null;
 
+	//now we start
 	function start() {
 		this.players = gapi.hangout.getParticipants();
 		var taskLists = {};
 		var check = {};
 
-		render() //renders the 
 		for(int i = 0; i < this.players.length; i++) {
 			taskLists[this.players[i]] = {};
 			taskLists[this.players[i]].tasklist = [];
@@ -35,9 +35,23 @@ function GameState() {
 			}
 		}
 
+		setValue("tasklist", taskLists);
+		render();
+
+		update();
+
 	}
 
+	//this updates the render and sends instructions.
 	function update() {
+		checkTaskComplete
+
+		//if your health goes below;
+		if (this.overallHealth <= 0) {
+			end("YOU LOST!!!!!");
+		}
+
+
 
 	}
 
@@ -100,6 +114,7 @@ function updateLocalDataState(state, metadata, game) {
 				gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
           updateLocalDataState(stateChangeEvent.state,
                                stateChangeEvent.metadata, game);
+          game.update();
         });
 
         //if another person enters or leaves, abort the mission by ending
