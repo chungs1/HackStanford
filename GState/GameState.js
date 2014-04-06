@@ -119,14 +119,16 @@ function GameState() {
 
 		for (var i = 0; i < addedKeys.length; i++) {
 			var key = addedKeys[i];
-			checkTaskComplete();
+			var name = this.listOfPeopleWithTasks[key].name;
+			checkTaskComplete(this.listOfExpirations[name]);
+			delete this.listOfExpirations[name];
 		};
 
 		for (var i = 0; i < peopleID.length; i++) {
 			//if the person doesn't have a task, 
 			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
 				var task = randomizeNum(peopleID[i]);
-				gapi.hangouts.data.setValue(task[0].name, task[0]);
+				gapi.hangouts.data.setValue(task[0].name, JSON.stringify(task[0]));
 			}
 		} 
 
@@ -139,12 +141,10 @@ function GameState() {
 			end("YOU LOST!!!!!");
 		}
 
-
-
 	}
 
 
-	//the main function
+	//the check function
 	function checkTaskComplete(taskObject) {
 		//if the thing in the array isn't undefined
 		if (this.listOfExpirations[taskObject.task_id] != undefined) {
@@ -179,6 +179,7 @@ function GameState() {
 	function end(message) {
 		//render("Lose"); //see the lose screen
 		console.log("YOU LOSE");
+		alert("YOU LOSE");
 	}
 
 
@@ -187,8 +188,8 @@ function GameState() {
 
 
 function updateLocalDataState(state, metadata, addedKeys, game) {
-	game.state = state;
-	game.metadata = metadata;
+	game.state = JSON.parse(state);
+	game.metadata = JSON.parse(metadata);
 	game.addedKeys = addedKeys;
 
 	game.update(); //render based on this
