@@ -32,10 +32,11 @@ h3{
 
 
 h3 task {
-      animation: type 4s steps(60, end); 
+
+      @-webkit-animation: type 4s steps(60, end); 
 }
 p:nth-child(2){
-  animation: type2 2s steps(60, end);
+  -webkit-animation: type2 2s steps(60, end);
 }
 
 p a{
@@ -44,20 +45,20 @@ p a{
 }
 
 span{
-  animation: blink 1s infinite;
+  @-webkit-animation: blink 1s infinite;
 }
 
-@keyframes type{ 
+@-webkit-keyframes type{ 
   from { width: 0; } 
 } 
 
-@keyframes type2{
+@-webkit-keyframes type2{
   0%{width: 0;}
   50%{width: 0;}
   100%{ width: 100; } 
 } 
 
-@keyframes blink{
+@-webkit-keyframes blink{
   to{opacity: .0;}
 }
 
@@ -79,10 +80,9 @@ td {
 
 
 
- 
 
 h3:nth-child(2){
-  animation: type2 8s steps(60, end);
+  @-webkit-animation: type2 8s steps(60, end);
 }
 
 h3 a{
@@ -91,22 +91,10 @@ h3 a{
 }
 
 span{
-  animation: blink 1s infinite;
+  -webkit-animation: blink 1s infinite;
 }
 
-@keyframes type{ 
-  from { width: 0; } 
-} 
-
-@keyframes type2{
-  0%{width: 0;}
-  50%{width: 0;}
-  100%{ width: 100; } 
-} 
-
-@keyframes blink{
-  to{opacity: .0;}
-}
+ 
 
 ::selection{
   background: black;
@@ -135,22 +123,33 @@ border-radius: 4px;}
 input { font-size:16px; font-family: courier; background-color:black;color:#29e229; } 
 
 
-.lock td {
-  width: 50px;
-  height:50px;
-  padding: 6px;
-  background-color: #899da7;
-}
+
 .lock h2 {
     text-align:center;
     font-size:20px;
     color:#133760;
 }
 
-.lockbutton {
+.smallbutton {
 margin: 2px 0 2px 2px;
 padding: 10px 50px;
 font-size: 18px;
 line-height: 1.33;
 background-color:#82e37a;
 border-radius: 4px;}
+
+
+input[type=range] {
+    -webkit-appearance: none;
+    background-color: #c65353;
+    width: 300px;
+    height:20px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+     -webkit-appearance: none;
+    background-color: #ad1c1c;
+    opacity: 0.5;
+    width: 10px;
+    height: 26px;
+}
