@@ -3,17 +3,16 @@
 function init(metadata) {
 	userID_ = gapi.auth.getLocalParticipant();
 	possibleTasks_ = JSON.parse(metadata);
-	tasks = {};
-	var state_ = null;
-	var metadata_ = null;
-	var currObjective = null;
+	tasks_ = {};
 	//get list of possible tasks to send to Jessica
 	for (var x in possibleTasks.keys){
-		if (x == userID){
-			tasks.push(possibleTasks[x]);
+		if (possibleTasks[x].person_id == userID){
+			tasks[x] = (possibleTasks[x]);
 		}
 	}
-	//send list to Jessica
+	toSend = JSON.stringify(possibleTasks);
+	SEND.TO.JESSICA(toSend);
+	//send possibleTasks to Jessica
 
 	//eventListeners here?
 	//var a = document.getElementById("a").value(task.keys[1]);
@@ -25,13 +24,14 @@ function init(metadata) {
 function updateLocalDataState(state, metadata) {
 	state_ = state;
 	metadata_ = metadata;
+	changes_ = {};
 	for (var x in metadata.keys){
-		if (x == userID_){
-
+		if (metadata[x].person_id == userID_){
+			changes[x] = metadata[x];
 		}
 	}
+	SEND.TO.JESSICA(toSend);
 }
-
 
 //check for state changes that GameState might throw at you
 gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
@@ -39,10 +39,10 @@ gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
 });
 }
 
-//sendUpdate() sends an update to GameServer in the form [taskID:taskValue]
+//sendUpdate() sends an update to GameServer using submitDelta.
 function sendUpdate(taskID,value){
 	state_[taskID].value = value;
 	gapi.hangout.data.submitDelta(state_[taskID]);
 	}
 }
-	//Code for when current task times out
+
