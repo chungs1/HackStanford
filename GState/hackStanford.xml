@@ -1,39 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<?xml-stylesheet type="text/css" href="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css"?>
-<Module>
-<!-- Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *      
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License
--->
-        <ModulePrefs title="Hack Stanford" height="400" width="550">
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+        <ModulePrefs title="Hack Stanford" >
                 <Require feature="rpc" />
                 <Require feature="views" />
                 <Require feature="locked-domain" />
         </ModulePrefs>
-        <Content type="html"><![CDATA[ 
- 
+        <Content type="html"><![CDATA[     
+
+<html>
+<body>
+<!-- Basic Javascript Libraries -->
 <script type="text/javascript" src="//www.google.com/jsapi"></script>
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
-<script type="text/javascript">google.load("jquery", "1.4.3");</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<!-- WILL IMPORT OUR CODE FROM HERE. PLEASE CHANGE THE URL TO REFLECT 
-YOUR OWN CODE AND VERSION --> 
+<!-- required Pusher library for the realtime magic  -->
+<script src="http://js.pusher.com/2.1/pusher.min.js"></script>
+<script src="panel.js"></script>
+
+
+<!-- Gamestate.js --> 
 <script src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/GameState.js"></script> 
+
+<!-- Panel.js -->
+<script src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/panel.js"></script> 
+
+
+<!-- Panel.css -->
 <link rel="stylesheet" src="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css"></link>
-<xml-stylesheet type-"text/css" src="https://dl.dropboxusercontent.
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.js"></script>
- 
-</div>
-<script type="https://dl.dropboxusercontent.com/u/52559094/Participant.js"></script>
-<h3>Crucial Task: </h3><h3 id = "task">Create new Variable<span>|</span></h3>
+
+
+
+<h3>Crucial Task: </h3><h3 id = "task"><span>|</span></h3>
 
 <hr>
 <div class="progress" id ="realtime_prog">
@@ -42,33 +41,35 @@ YOUR OWN CODE AND VERSION -->
  <span class="sr-only" id = "time_msg"></span>
 </div>
 
+
+
 <table cellspacing = "2" cell padding = "0" width="100%">
 <tbody>
     <tr>
-    <td><h2>one</h2>
-        <button type = "button" class = "bluebutton"> hi</button>    
-        <button type = "button" class = "redbutton"> hi</button></td>
+    <td><h2 class = "h2_1" id = "h2_1"></h2> </div>
+
 </td>
         
-    <td> <h2>two</h2> <form>
-<p> Input: <input type="text" name="text"><br>
-</form></p>
+    <td> <h2 id = "h2_2" class = "h2_2"></h2> 
  </td><tr>
-    <td > <h2>three</h2><form action="demo_form.asp" method="get">
-Heat: 0<input type="range" name="Points" min="1" max="200">100
-<input type="submit">
-</form> </td>
+    <td > <h2 id = "h2_3" class = "h2_3"></h2>
             
-    <td>  <h2>four</h2>
-        <button type = "button" class="lockbutton">1</button><button type = "button" class="lockbutton">1</button><button type = "button" class="lockbutton">1</button><button type = "button" class="lockbutton">1</button>
-           
+    <td>  <h2 id = "h2_4"></h2>
 </td>
-        <link href="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css" rel="stylesheet">
-<script>
-</script>
+    
 
-<script language="javascript">
 
+    
+    
+        <link href="panel.css" rel="stylesheet">
+
+    
+    
+        <link href="panel.css" rel="stylesheet">
+
+
+// Wait for gadget to load.                                                       
+gadgets.util.registerOnLoadHandler(init);
 </script>
 </body>
 ]]>
