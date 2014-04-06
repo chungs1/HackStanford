@@ -12,7 +12,7 @@ var select_obj = JSON.parse(json);
 var obj_arr = [action_obj,select_obj,slider_obj];
 var obj_arr = [action_obj,select_obj,slider_obj];
 */
-function pusher_timer() {
+function updateProgressBar(task) {
   var pusher = new Pusher('70931')
   var uID = p-1;
 
@@ -20,7 +20,7 @@ function pusher_timer() {
   
 channel.bind('update', function(data) { // Bind to an event on our channel, in our case, update
     var progressBar = document.getElementById('realtime_prog');
-    prog.value=(data.time+"%")
+    progressBar.width=(task.expiration+"%")
 
     // Process is complete,Do whatever you want now, maybe redirect them to their freshly created account?
     if (data.progress == 0) {
