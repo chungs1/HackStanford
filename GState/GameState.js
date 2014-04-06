@@ -117,8 +117,12 @@ function GameState() {
 		} 
 
 		//remove from sharedstate old completed tasksole.
+		var arrayOfAddedKeys = new Array();
+		for (var i = 0;i<this.addedKeys.length;i++){
+			arrayOfAddedKeys[i] = JSON.stringify(this.addedKeys[i]);
+		}
 		
-		gapi.hangout.data.submitDelta({}, this.addedKeys);
+		gapi.hangout.data.submitDelta({}, arrayOfAddedKeys);
 
 
 		//if your health goes below;
