@@ -7,7 +7,6 @@ function GameState() {
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
 	this.listOfPeopleWithTasks = {};
-	this.listOfFuncs = [];
 	var list = [];
 	//console.log("hello");
 	$.ajax({
@@ -29,10 +28,11 @@ function GameState() {
 	console.log("Arr " + this.listOfFuncs);
 	this.i = 0;
 
-	function initializeTask(task, userId){
-		task.task_id = i;
-		i++;
-		task.expiration = Date();
+	this.initializeTask = function(task, userId){
+		task.task_id = this.i;
+		this.i++;
+		task.expiration = new Date();
+		//console.log(task.expiration.getMilliseconds());
 		task.expiration.setMilliseconds(task.expiration.getMilliseconds() + this.timeDur);
 		task.userId = userId;
 		task.done = false;
@@ -44,7 +44,30 @@ function GameState() {
 		this.players = gapi.hangout.getParticipants();
 		var taskLists = {};
 		var check = {};
-		for(var i = 0; i < this.players.length; i++) { //2 players for 
+		var numPlayers = this.players.length;
+
+		function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+		};
+		var i = 0;
+		var taskLists = {};
+		for(var j =0; j < numPlayers; j++) {
+			taskLists[this.players[j]] = {};
+			taskLists[this.players[j]].tasklist = [];
+		}
+		this.listOfFuncs = shuffle(this.listOfFuncs);
+		var newFuncs = [];
+		while(i<numPlayers*4){
+			var id = this.players[Math.floor(i/4)];
+			taskLists[id].tasklist.push(this.listOfFuncs[i]);
+			this.listOfPeopleWithTasks[id] = false;
+			newFuncs.push(this.listOfFuncs[i]);
+			this.listOfExpirations[this.listOfFuncs[i].name] = this.listOfFuncs[i];
+			i++;
+		}
+		this.listOfFuncs = newFuncs;
+		/*for(var i = 0; i < this.players.length; i++) { //2 players for 
 			this.listOfPeopleWithTasks[this.players[i].id] = false;
 			taskLists[this.players[i]] = {};
 			taskLists[this.players[i]].tasklist = [];
@@ -52,7 +75,7 @@ function GameState() {
 				var randomFunc = Math.floor(Math.random()*3);
 				var possibleFunc = this.listOfFuncs[randomFunc];
 
-				while(true) {
+				for(var i=0;i<2000;i++) {
 					if(check[possibleFunc] == undefined) {
 						taskLists[this.players[i]].tasklist.push(possibleFunc);
 						check[possibleFunc] = true;
@@ -63,9 +86,9 @@ function GameState() {
 					}
 				}
 			}
-		}
+		}*/
 
-		update();
+		this.update();
 
 	}
 
@@ -76,15 +99,18 @@ function GameState() {
 		for (var i = 0; i < this.addedKeys.length; i++) {
 			var key = this.addedKeys[i];
 			var name = this.listOfPeopleWithTasks[key].name;
-			checkTaskComplete(this.listOfExpirations[name]);
+			console.log(this.listOfExpirations[name]);
+			console.log(this.listOfExpirations);
+			this.checkTaskComplete(this.listOfExpirations[name]);
 			delete this.listOfExpirations[name];
 		};
 
 		for (var i = 0; i < peopleID.length; i++) {
 			//if the person doesn't have a task, 
 			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
-				var task = randomizeNum(peopleID[i]);
-				gapi.hangout.data.setValue(task[0].name, JSON.stringify(task[0]));
+				var task = this.randomizeFunc(peopleID[i]);
+				console.log(task);
+				gapi.hangout.data.setValue(task["name"].name, JSON.stringify(task["name"]));
 			}
 		} 
 
@@ -102,7 +128,7 @@ function GameState() {
 
 
 	//the check function
-	function checkTaskComplete(taskObject) {
+	this.checkTaskComplete = function(taskObject) {
 		//if the thing in the array isn't undefined
 		if (this.listOfExpirations[taskObject.task_id] != undefined) {
 			//if it's greater than the duration time
@@ -113,9 +139,10 @@ function GameState() {
 		}
 	}
 
-	function randomizeFunc(person_id) {
-		var randomID = listOfFuncs[randomizeNum("func")];
-		var task = initializeTask(randomID, person_id);
+	this.randomizeFunc = function(person_id) {
+		console.log(this.i);
+		var randomID = this.listOfFuncs[this.randomizeNum("func")];
+		var task = this.initializeTask(randomID, person_id);
 		var name = randomID[name];
 		var itemToSend = {name: task};
 
@@ -126,11 +153,11 @@ function GameState() {
 
 	}
 
-	function randomizeNum(option) {
+	this.randomizeNum = function(option) {
 		if(option == "func") {
-			return Math.floor(Math.rand()*this.listOfFuncs.length);
-		} else if (func == "number") {
-			return Math.floor(Math.rand()*1);
+			return Math.floor(Math.random()*this.listOfFuncs.length);
+		} else if (option == "number") {
+			return Math.floor(Math.random()*1);
 		}
 	}
 
@@ -151,7 +178,7 @@ function updateLocalDataState(state, metadata, addedKeys) {
 }
 
  var game = new GameState();
-/*
+
 (function() {
 	console.log("initializing..");
 	if(gapi && gapi.hangout) {
@@ -166,6 +193,7 @@ function updateLocalDataState(state, metadata, addedKeys) {
         });
 
         //if there is no initial game state, then get the shared state
+
         if (!game.state) {
           var state = gapi.hangout.data.getState();
           var metadata = gapi.hangout.data.getStateMetadata();
@@ -181,4 +209,3 @@ function updateLocalDataState(state, metadata, addedKeys) {
 		gapi.hangout.onApiReady.add(initHangout);
 	}
 })();
-*/
