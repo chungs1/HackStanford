@@ -215,8 +215,7 @@ function updateLocalDataState(state, metadata, addedKeys) {
 	game.update(); //render based on this
 }
 
- var game = new GameState();
-
+var game = null;
 
 (function() {
 	//console.log("initializing..");
@@ -232,7 +231,12 @@ function updateLocalDataState(state, metadata, addedKeys) {
         });
 
         gapi.hangout.data.onParticipantsEnabled.add(function(stateChangeEvent) {
+
         	game.numParticipants++;
+        	if(game.numParticipants == 3) {
+        		game = new GameState();
+        		game.start();
+        	}
         });
 
         //if there is no initial game state, then get the shared state
