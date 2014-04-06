@@ -48,7 +48,7 @@ function GameState() {
 		for (var i = 0; i < addedKeys.length; i++) {
 			var key = addedKeys[i];
 			checkTaskComplete();
-			sendNewFunc(
+			sendNewFunc();
 		};
 
 		//if your health goes below;
