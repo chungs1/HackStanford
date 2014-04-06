@@ -26,7 +26,7 @@
 
 <!-- WILL IMPORT OUR CODE FROM HERE. PLEASE CHANGE THE URL TO REFLECT 
 YOUR OWN CODE AND VERSION --> 
-<!-- <script src="https://dl.dropboxusercontent.com/u/52559094/GState/GameState.js"></script> -->
+<script src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/GameState.js"></script> 
 <link rel="stylesheet" src="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css"></link>
 <xml-stylesheet type-"text/css" src="https://dl.dropboxusercontent.
 <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.js"></script>

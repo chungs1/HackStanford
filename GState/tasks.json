@@ -20,11 +20,15 @@
 },
 {
 	"name": "TCP Port Scan",
-	"type": "button"
+	"type": "takeaction",
+	"action":"",
+	"subject": "TCP Port Scan"
 },
 {
 	"name": "intrusion detection",
-	"type": "button"
+	"type": "takeaction",
+	"action":"",
+	"subject": "intrusion detection"
 },
 {
 	"name": "Calbots invisishield",
@@ -39,7 +43,9 @@
 },
 {
 	"name": "RSA attack",
-	"type": "button"
+	"type": "takeaction",
+	"action":"",
+	"subject": "RSA attack"
 },
 {
 	"name": "permissions",

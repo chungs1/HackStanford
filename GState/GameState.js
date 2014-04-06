@@ -1,77 +1,35 @@
 function GameState() {
 	//this.level = 1;
-	console.log("CALLING GAMESTATE");
+	console.log("start");
 	this.taskUrl = 'https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/tasks.json'
 	this.win = false;
 	this.players = [];
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
 	this.listOfPeopleWithTasks = {};
-	this.listOfFuncs = [{
-	"name": "break firewall",
-	"type": "takeaction",
-	"action": "break",
-	"subject": "firewall"
+	this.listOfFuncs = [];
+	var list = [];
+	//console.log("hello");
+	$.ajax({
+  		dataType: "json",
+  		url: this.taskUrl,
+  		success: function(data){
+  			list = data;
+  		},
+  		async: false
+	});
+	this.listOfFuncs = list;
 
-},
-{
-	"name": "shit on Debra's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Debra's desk"
-},
-{
-	"name": "shit on Patt's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Patt's desk"
-},
-{
-	"name": "shit on James's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "James's desk"
-},
-{
-	"name": "shit on Kyle's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Kyle's desk"
-},
-{
-	"name": "shit on Pappy's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Pappy's desk"
-},
-{
-	"name": "shit on Menora's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Menora's desk"
-},
-{
-	"name": "shit on Carl's desk",
-	"type": "takeaction",
-	"action": "shit on",
-	"subject": "Carl's desk"
-}];
-	var	that = [];
-	/*console.log("before " + that);
-	$.getJSON(this.taskUrl, function(data) {
-		that = data[0];
-	 });
-	//console.log("before " + that);
-	this.listOfFuncs = that;
-	console.log("after " + this.listOfFuncs);
-	//this.listOfFuncs = this.listOfFuncs[1];*/
+	//this.listOfFuncs = this.listOfFuncs[1];
 	this.timeDur = 5000;
 	this.state = null;
 	this.metadata = null;
 	this.addedKeys = null;
 
-	console.log("Arr " + this.listOfFuncs);
-	this.i = 0;
+	for(i=0;i<this.listOfFuncs.length;i++){
+		console.log("hi" + this.listOfFuncs[i].name);
+	}
+	var i = 0;
 
 	function initializeTask(task, userId){
 		task.task_id = i;
@@ -159,7 +117,8 @@ function GameState() {
 	function randomizeFunc(person_id) {
 		var randomID = listOfFuncs[randomizeNum("func")];
 		var task = initializeTask(randomID, person_id);
-		var itemToSend = {randomID.name: task};
+		var name_temp = randomID.name;
+		var itemToSend = {name_temp: task};
 
 		this.listOfExpirations[randomID.name] = task;
 		this.listOfPeopleWithTasks[person_id] = true;
