@@ -12,10 +12,13 @@
 <body>
 
 
-<script src="http://js.pusher.com/2.1/pusher.min.js"></script> <!-- required Pusher library for the realtime magic  -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="panel.js"></script>
+<script src="http://js.pusher.com/2.1/pusher.min.js"></script> 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+<script src="panel.js"></script>
+<button class = "startbutton"> start</button> 
 <h3>Crucial Task: </h3><h3 id = "task"><span>|</span></h3>
 
 <hr>
