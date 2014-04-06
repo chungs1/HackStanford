@@ -39,7 +39,8 @@
 	"name": "bribe ",
 	"type": "slider",
 	"min_value":0,
-	"max_value":10
+	"max_value":10,
+	"max_value":4
 },
 {
 	"name": "RSA attack",

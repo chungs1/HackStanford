@@ -5,10 +5,11 @@ function GameState() {
 	console.log("start");
 	this.taskUrl = 'https://dl.dropboxusercontent.com/u/52559094/GState/tasks.json'
 	this.win = false;
-	this.players = [];
+	this.players = []; 
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
 	this.listOfPeopleWithTasks = {};
+/*
 	var list = [];
 	this.completedTasks = 0;
 	//console.log("hello");
@@ -21,6 +22,24 @@ function GameState() {
   		async: false
 	});
 	this.listOfFuncs = list;
+*/
+	
+	/*Fetches the Task*/
+	function fetchTasks(taskUrl){
+		var list = [];
+		$.ajax({
+  			dataType: "json",
+  			url: taskUrl,
+  			success: function(data){
+  				list = data;
+  			},
+  			async: false
+		});
+		return list;
+	}
+	
+	this.listOfFuncs = fetchTasks(this.taskUrl);
+>>>>>>> 8401b6d877177b9dee452cf74bc2a56c6f6234a7
 
 	//this.listOfFuncs = this.listOfFuncs[1];
 	this.timeDur = 5000;
@@ -28,15 +47,26 @@ function GameState() {
 	this.metadata = null;
 	this.addedKeys = [];
 
-	//console.log("Arr " + this.listOfFuncs);
 	this.i = 0;
 
+
+	function shuffle(o){ //v1.0
+    		for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    		return o;
+	};
+
+	/* Initializes a Task Object Right before it sends it */
 	this.initializeTask = function(task, userId){
 		task.task_id = this.i;
 		this.i++;
 		task.expiration = new Date();
 		//console.log(task.expiration.getMilliseconds());
 		task.expiration.setMilliseconds(task.expiration.getMilliseconds() + this.timeDur);
+		if(task.type == "select"){
+			task.answer = shuffle(task.options)[0];
+		} else if(task.type == "slider"){
+			task.answer = Math.floor(Math.random() * (task.max_value - task.min_value)) + task.min_value;
+		}
 		task.userId = userId;
 		task.done = false;
 		return task;
@@ -53,6 +83,7 @@ function GameState() {
     	for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     	return o;
 			};
+
 
 		var i = 0;
 		var taskLists = {};

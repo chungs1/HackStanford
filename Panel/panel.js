@@ -1,14 +1,16 @@
 /*https://github.com/pusher/real-time-progress-bar-tutorial/blob/master/public/js/home.js*/
 
-var json = '{"name":"seduce male secretary","type":"button","action":"seduce","subject":"male secretary"}';
+var json = '{"name":"seduce male secretary","type":"takeaction","action":"seduce","subject":"male secretary"}';
 var action_obj = JSON.parse(json);
 
-json = '{"name": "calbots invisishield","type": "select","subject":"calbots invisishield","options": [1,2,3,4]}';
+json='{"name": "bribe ","type": "slider","min_value":0,"max_value":10,"answer":5}';
+var slider_obj = JSON.parse(json);
+
+json = '{"name": "calbots invisishield","type": "select","subject":"calbots invisishield","options": [1,2,3,4], "answer":3}';
 var select_obj = JSON.parse(json);
 
 
-json='{"name": "bribe ","type": "slider","min_value":0,"max_value":10}';
-var slider_obj = JSON.parse(json);
+
 
 var obj_arr = [action_obj,select_obj,slider_obj];
 function pusher_timer() {
@@ -39,7 +41,7 @@ function generateTask(tasks_in) {
         var curtask = tasks_in[i];
         console.log(curtask);
         document.getElementById(title).innerHTML=curtask.name;
-        if (curtask.type == "button") {
+        if (curtask.type == "takeaction") {
             // create button
              var new_button = $('<button />')
                 .addClass('bluebutton')
@@ -57,7 +59,6 @@ function generateTask(tasks_in) {
                  var new_button = $('<button />')
                 .addClass('smallbutton')
                 .text(curtask.options[s])
-                //.mousedown(onselectClick()); //do something
                 .insertAfter( "."+title +"");
             }
                
@@ -75,7 +76,6 @@ function generateTask(tasks_in) {
                     'class':'slider',
                     'onmouseup':"updateTicker(this)"
                 })
-                //.mouseup(console.log("change"))
                 .insertAfter( "."+title +"");
 
 
@@ -89,8 +89,15 @@ function updateTicker(button){
 
 
 
-function textin(task) {
-    document.getElementById(task).innerHTML=curtask.command;
+function textIn(task) {
+    var finaltask = task.name;
+    if (task.type=="select" || task.type=="slider") {
+        finaltask = "set " + task.name + " to " + task.answer+"";
+    }
+    document.getElementById("task").innerHTML=finaltask;
+    $('#'+task).attr( 'task_id',task.task_id );  //not actually 100% sure that this works. 
+
+    
 }
 
  
