@@ -123,6 +123,10 @@ function GameState() {
 		for (var i = 0; i < this.addedKeys.length; i++) {
 			var keyObj = this.addedKeys[i];
 			//var name = this.listOfExpirations[key].name
+			if(keyObj.key == "start") {
+				game.start();
+				return;
+			}
 ;			console.log('meh');
 			console.log(this.addedKeys[i]);
 			//console.log(this.listOfExpirations[name]);
@@ -233,7 +237,7 @@ var game = null;
 
         game = gapi.hangout.data.getValue("game");
 
-        gapi.hangout.data.onParticipantsEnabled.add(function(stateChangeEvent) {
+        gapi.hangout.onParticipantsEnabled.add(function(stateChangeEvent) {
         	console.log("added participant");s
         	game.numParticipants++;
         	
@@ -242,6 +246,10 @@ var game = null;
         //if there is no initial game state, then get the shared state
 
         if (!game || !game.state) {
+        	if(!game) {
+        		gapi.hangout.data.setValue("game", new GameState());
+        	}
+        	game = gapi.hangout.data.getValue("game");
           var state = gapi.hangout.data.getState();
           var metadata = gapi.hangout.data.getStateMetadata();
           var addedKeys = [];
