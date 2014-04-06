@@ -12,23 +12,6 @@ var select_obj = JSON.parse(json);
 
 
 
-var obj_arr = [action_obj,select_obj,slider_obj];
-function pusher_timer() {
-  var pusher = new Pusher('70931')
-  var uID = p-1;
-
-  var channel = pusher.subscribe('signup_process_'+uID) 
-  
-channel.bind('update', function(task) { // Bind to an event on our channel, in our case, update
-    var progressBar = document.getElementById('realtime_prog');
-    progressBar.width=(task.expiration.getTime()+"%")
-
-    // Process is complete,Do whatever you want now, maybe redirect them to their freshly created account?
-    if (data.progress==0) {
-      $('#time_msg').text("Ran out of time!");
-    }
-  });
- }
 
 //sets timer to task.expiration
 function time(task) {
@@ -109,9 +92,7 @@ function generateTask(tasks_in) {
     }
 }
 
-function updateTicker(button){
-    $("#sliderTicker").text(button.value);
-}
+
 
 
 function sendResponse(element){
