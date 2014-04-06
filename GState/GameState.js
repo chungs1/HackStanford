@@ -1,3 +1,5 @@
+var participants
+
 function GameState() {
 	//this.level = 1;
 	console.log("start");
@@ -51,7 +53,7 @@ function GameState() {
     	for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     	return o;
 			};
-			
+
 		var i = 0;
 		var taskLists = {};
 		for(var j =0; j < numPlayers; j++) {
@@ -70,6 +72,11 @@ function GameState() {
 		}
 		this.listOfFuncs = newFuncs;
 
+		for (var j = 0; j < numPlayers; j++) {
+			//generate the task list for each people
+			generate_task(taskLists[this.player[j].tasklist);
+		}
+
 		this.update();
 
 	}
@@ -80,8 +87,8 @@ function GameState() {
 
 		for (var i = 0; i < this.addedKeys.length; i++) {
 			var keyObj = this.addedKeys[i];
-			//var name = this.listOfExpirations[key].name;
-			console.log('meh');
+			//var name = this.listOfExpirations[key].name
+;			console.log('meh');
 			console.log(this.addedKeys[i]);
 			//console.log(this.listOfExpirations[name]);
 			console.log(this.listOfExpirations[keyObj.key]);
