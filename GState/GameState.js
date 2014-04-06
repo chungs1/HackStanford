@@ -8,6 +8,7 @@ function GameState() {
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
 	this.listOfPeopleWithTasks = {};
 	var list = [];
+	this.completedTasks = 0;
 	//console.log("hello");
 	$.ajax({
   		dataType: "json",
@@ -25,7 +26,7 @@ function GameState() {
 	this.metadata = null;
 	this.addedKeys = [];
 
-	console.log("Arr " + this.listOfFuncs);
+	//console.log("Arr " + this.listOfFuncs);
 	this.i = 0;
 
 	this.initializeTask = function(task, userId){
@@ -47,9 +48,10 @@ function GameState() {
 		var numPlayers = this.players.length;
 
 		function shuffle(o){ //v1.0
-    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
-		};
+    	for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    	return o;
+			};
+			
 		var i = 0;
 		var taskLists = {};
 		for(var j =0; j < numPlayers; j++) {
@@ -67,26 +69,6 @@ function GameState() {
 			i++;
 		}
 		this.listOfFuncs = newFuncs;
-		/*for(var i = 0; i < this.players.length; i++) { //2 players for 
-			this.listOfPeopleWithTasks[this.players[i].id] = false;
-			taskLists[this.players[i]] = {};
-			taskLists[this.players[i]].tasklist = [];
-			for(var j = 0; j < 4; j++) {
-				var randomFunc = Math.floor(Math.random()*3);
-				var possibleFunc = this.listOfFuncs[randomFunc];
-
-				for(var i=0;i<2000;i++) {
-					if(check[possibleFunc] == undefined) {
-						taskLists[this.players[i]].tasklist.push(possibleFunc);
-						check[possibleFunc] = true;
-						break;
-					} else {
-						randomFunc = Math.floor(Math.random()*3);
-						possibleFunc = this.listOfFuncs[randomFunc];
-					}
-				}
-			}
-		}*/
 
 		this.update();
 
@@ -111,7 +93,7 @@ function GameState() {
 			//if the person doesn't have a task, 
 			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
 				var task = this.randomizeFunc(peopleID[i]);
-				console.log(task);
+				//console.log(task);
 				gapi.hangout.data.setValue(task["name"].name, JSON.stringify(task["name"]));
 			}
 		} 
@@ -129,7 +111,6 @@ function GameState() {
 		if (this.overallHealth <= 0) {
 			end("YOU LOST!!!!!");
 		}
-
 	}
 
 
@@ -141,12 +122,12 @@ function GameState() {
 			if (Date.now() > this.listOfExpirations[taskObject.task_id].expiration.getMilliseconds()) {
 				this.overallHealth = this.overallHealth - 10;
 				this.listOfPeopleWithTasks[taskObject.userId] = false;
-			}
+			// }
 		}
 	}
 
 	this.randomizeFunc = function(person_id) {
-		console.log(this.i);
+		//console.log(this.i);
 		var randomID = this.listOfFuncs[this.randomizeNum("func")];
 		var task = this.initializeTask(randomID, person_id);
 		var name = randomID[name];
@@ -186,7 +167,7 @@ function updateLocalDataState(state, metadata, addedKeys) {
  var game = new GameState();
 
 (function() {
-	console.log("initializing..");
+	//console.log("initializing..");
 	if(gapi && gapi.hangout) {
 
 		//initialize the hangout
