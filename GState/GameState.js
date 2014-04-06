@@ -1,21 +1,56 @@
 function GameState() {
 	//this.level = 1;
+	console.log("CALLING GAMESTATE");
+	this.taskUrl = 'https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/tasks.json'
 	this.win = false;
 	this.players = [];
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
-	this.listOfFuncs = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "X", "Y", "Z"];
+	this.listOfFuncs = [{
+	"name": "break firewall",
+	"type": "takeaction",
+	"action": "break",
+	"subject": "firewall"
+
+},
+{
+	"name": "shit on Debra's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Debra's desk"
+}];
+	var	that = [];
+	/*console.log("before " + that);
+	$.getJSON(this.taskUrl, function(data) {
+		that = data[0];
+	 });
+	//console.log("before " + that);
+	this.listOfFuncs = that;
+	console.log("after " + this.listOfFuncs);
+	//this.listOfFuncs = this.listOfFuncs[1];*/
 	this.timeDur = 5000;
 	this.state = null;
 	this.metadata = null;
 	this.addedKeys = null;
+
+	console.log("Arr " + this.listOfFuncs);
+	this.i = 0;
+
+	function initializeTask(task, userId){
+		task.task_id = i;
+		i++;
+		task.expiration = Date();
+		task.expiration.setMilliseconds(task.expiration.getMilliseconds() + this.timeDur);
+		task.userId = userId;
+		task.done = false;
+		return task;
+	}
 
 	//now we start
 	this.start = function() {
 		this.players = gapi.hangout.getParticipants();
 		var taskLists = {};
 		var check = {};
-
 		for(var i = 0; i < this.players.length; i++) {
 			taskLists[this.players[i]] = {};
 			taskLists[this.players[i]].tasklist = [];
