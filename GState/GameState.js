@@ -231,11 +231,10 @@ var game = null;
         });
 
         gapi.hangout.data.onParticipantsEnabled.add(function(stateChangeEvent) {
-
+        	console.log("added participant");s
         	game.numParticipants++;
         	if(game.numParticipants == 3) {
         		game = new GameState();
-        		game.start();
         	}
         });
 
