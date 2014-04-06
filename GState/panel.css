@@ -67,7 +67,7 @@ span{
 
 td {
   width: 33.3%;
-  height:200px;
+  height:250px;
   padding: 6px;
   background-color: #221f1f;
   vertical-align: top;
@@ -103,13 +103,7 @@ span{
 
 
 /* Elements */
-.redbutton {
-margin: 10px 25px 10px 10px;
-padding: 10px 100px;
-font-size: 20px;
-line-height: 1.33;
-background-color:#d61111;
-border-radius: 4px;}
+
 
 .bluebutton {
 margin: 10px 25px 10px 10px;
@@ -152,4 +146,13 @@ input[type="range"]::-webkit-slider-thumb {
     opacity: 0.5;
     width: 10px;
     height: 26px;
+}
+
+.startbutton {
+margin: 10px 25px 10px 10px;
+padding: 10px 100px;
+font-size: 20px;
+line-height: 1.33;
+background-color:#a06aa2;
+border-radius: 4px;   
 }
