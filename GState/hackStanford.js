@@ -30,6 +30,28 @@ channel.bind('update', function(task) { // Bind to an event on our channel, in o
   });
  }
 
+//sets timer to task.expiration
+function time(task) {
+     $("b[id=timer]").text(task.expiration);
+var settimmer = 0;
+        $(function(){
+                window.setInterval(function() {
+                    var timeCounter = $("b[id=timer]").html();
+                    var updateTime = eval(timeCounter)- eval(1);
+                    $("b[id=timer]").html(updateTime);
+
+                    if(updateTime == 0){
+                        var task_id = $("#task").attr(task_id);
+                        gapi.hangout.data.setValue(task_id,false);
+                    }
+                }, 1000);
+
+        });
+}
+
+
+
+
 
 //task_in is Task json object (list of four)
 function generateTask(tasks_in) {
@@ -105,5 +127,5 @@ function textIn(task) {
     document.getElementById("task").innerHTML=finaltask;
     $('#task').attr( 'task_id',task.task_id );  //not actually 100% sure that this works. 
 
-    
+    timer(task);
 }
