@@ -2,27 +2,12 @@ var participants
 
 function GameState() {
 	//this.level = 1;
-	console.log("start");
-	this.taskUrl = 'https://dl.dropboxusercontent.com/u/52559094/GState/tasks.json'
+	this.taskUrl = 'https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/tasks.json'
 	this.win = false;
 	this.players = []; 
 	this.overallHealth = 100;
 	this.listOfExpirations = {}; // dictionary of task_id: {startTime: #start, timeDur: #timeMs}
 	this.listOfPeopleWithTasks = {};
-/*
-	var list = [];
-	this.completedTasks = 0;
-	//console.log("hello");
-	$.ajax({
-  		dataType: "json",
-  		url: this.taskUrl,
-  		success: function(data){
-  			list = data;
-  		},
-  		async: false
-	});
-	this.listOfFuncs = list;
-*/
 	
 	/*Fetches the Task*/
 	function fetchTasks(taskUrl){
@@ -39,9 +24,6 @@ function GameState() {
 	}
 	
 	this.listOfFuncs = fetchTasks(this.taskUrl);
->>>>>>> 8401b6d877177b9dee452cf74bc2a56c6f6234a7
-
-	//this.listOfFuncs = this.listOfFuncs[1];
 	this.timeDur = 5000;
 	this.state = null;
 	this.metadata = null;
@@ -67,6 +49,19 @@ function GameState() {
 		} else if(task.type == "slider"){
 			task.answer = Math.floor(Math.random() * (task.max_value - task.min_value)) + task.min_value;
 		}
+		task.userId = userId;
+		task.done = false;
+		return task;
+	}
+
+	console.log("Arr " + this.listOfFuncs);
+	this.i = 0;
+
+	function initializeTask(task, userId){
+		task.task_id = i;
+		i++;
+		task.expiration = Date();
+		task.expiration.setMilliseconds(task.expiration.getMilliseconds() + this.timeDur);
 		task.userId = userId;
 		task.done = false;
 		return task;
