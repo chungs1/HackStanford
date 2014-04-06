@@ -108,6 +108,7 @@ function GameState() {
 
 		for (var j = 0; j < numPlayers; j++) {
 			//generate the task list for each people
+
 			generateTask(taskLists[this.players[j]].tasklist);
 		}
 
@@ -230,17 +231,17 @@ var game = null;
                                stateChangeEvent.metadata, stateChangeEvent.addedKeys);
         });
 
+        game = gapi.hangout.data.getValue("game");
+
         gapi.hangout.data.onParticipantsEnabled.add(function(stateChangeEvent) {
         	console.log("added participant");s
         	game.numParticipants++;
-        	if(game.numParticipants == 3) {
-        		game = new GameState();
-        	}
+        	
         });
 
         //if there is no initial game state, then get the shared state
 
-        if (!game.state) {
+        if (!game || !game.state) {
           var state = gapi.hangout.data.getState();
           var metadata = gapi.hangout.data.getStateMetadata();
           var addedKeys = [];
@@ -249,6 +250,7 @@ var game = null;
           }
         }
         gapi.hangout.onApiReady.remove(initHangout);
+				gapi.hangout.data.setValue("game", new GameState());
 			}
 		}
 		gapi.hangout.onApiReady.add(initHangout);
