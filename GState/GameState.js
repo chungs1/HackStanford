@@ -97,11 +97,13 @@ function GameState() {
 		var peopleID =  Object.keys(this.listOfPeopleWithTasks);
 
 		for (var i = 0; i < this.addedKeys.length; i++) {
-			var key = this.addedKeys[i];
-			var name = this.listOfPeopleWithTasks[key].name;
-			console.log(this.listOfExpirations[name]);
-			console.log(this.listOfExpirations);
-			this.checkTaskComplete(this.listOfExpirations[name]);
+			var keyObj = this.addedKeys[i];
+			//var name = this.listOfExpirations[key].name;
+			console.log('meh');
+			console.log(this.addedKeys[i]);
+			//console.log(this.listOfExpirations[name]);
+			console.log(this.listOfExpirations[keyObj.key]);
+			this.checkTaskComplete(this.listOfExpirations[keyObj.key]);
 			delete this.listOfExpirations[name];
 		};
 
