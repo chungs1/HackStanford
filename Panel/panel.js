@@ -45,6 +45,8 @@ function generateTask(tasks_in) {
             // create button
              var new_button = $('<button />')
                 .addClass('bluebutton')
+                .attr("value",true)
+                 .click(sendResponse(this))
                 .text(curtask.action)
                 //.mousedown(alert("hello")) //do something
                 .insertAfter( "."+title +"");
@@ -58,7 +60,9 @@ function generateTask(tasks_in) {
             for (var s = 0; s <=3; s++) {
                  var new_button = $('<button />')
                 .addClass('smallbutton')
+                .attr("value",options[s])
                 .text(curtask.options[s])
+                 .click(sendResponse(this))
                 .insertAfter( "."+title +"");
             }
                
@@ -103,5 +107,3 @@ function textIn(task) {
 
     
 }
-
- 
