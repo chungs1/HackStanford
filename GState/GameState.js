@@ -102,7 +102,7 @@ function GameState() {
 
 		for (var j = 0; j < numPlayers; j++) {
 			//generate the task list for each people
-			generate_task(taskLists[this.player[j]].tasklist);
+			generateTask(taskLists[this.players[j]].tasklist);
 		}
 
 		this.update();
@@ -121,7 +121,7 @@ function GameState() {
 			//console.log(this.listOfExpirations[name]);
 			console.log(this.listOfExpirations[keyObj.key]);
 			this.checkTaskComplete(this.listOfExpirations[keyObj.key]);
-			delete this.listOfExpirations[name];
+			delete this.listOfExpirations[keyObj.key];
 		};
 
 		if(this.numComplete >= 10) {
@@ -133,7 +133,7 @@ function GameState() {
 			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
 				var task = this.randomizeFunc(peopleID[i]);
 				//console.log(task);
-				textin(JSON.stringify(task));
+				textIn(task);
 				gapi.hangout.data.setValue(task["name"].name, JSON.stringify(task["name"]));
 			}
 		} 
@@ -173,9 +173,9 @@ function GameState() {
 		var randomID = this.listOfFuncs[this.randomizeNum("func")];
 		var task = this.initializeTask(randomID, person_id);
 		var name = randomID[name];
-		var itemToSend = {name: task};
+		var itemToSend = task;
 
-		this.listOfExpirations[randomID.name] = task;
+		this.listOfExpirations[task.task_id] = task;
 		this.listOfPeopleWithTasks[person_id] = true;
 		
 		return itemToSend;
@@ -206,7 +206,6 @@ function updateLocalDataState(state, metadata, addedKeys) {
 	game.state = state;
 	game.metadata = metadata;
 	game.addedKeys = addedKeys;
-
 	game.update(); //render based on this
 }
 

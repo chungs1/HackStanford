@@ -9,10 +9,9 @@ var slider_obj = JSON.parse(json);
 json = '{"name": "calbots invisishield","type": "select","subject":"calbots invisishield","options": [1,2,3,4], "answer":3}';
 var select_obj = JSON.parse(json);
 
-*/
-
-
 var obj_arr = [action_obj,select_obj,slider_obj];
+var obj_arr = [action_obj,select_obj,slider_obj];
+*/
 function pusher_timer() {
   var pusher = new Pusher('70931')
   var uID = p-1;
@@ -30,39 +29,45 @@ channel.bind('update', function(data) { // Bind to an event on our channel, in o
   });
  }
 
-
+function sendResponse(element){
+    var task_id = $("#task").attr("task_id");
+    console.log("hi"+task_id + "space " + element.value);
+    gapi.hangout.data.setValue(task_id,element.value);
+}
 //task_in is Task json object (list of four)
 function generateTask(tasks_in) {
-    for (var i = 0; i<=2; i++) {
+    console.log("hi " + tasks_in);
+    for (var i = 0; i<4; i++) {
         //change title of each subpanel
 
 
         var title = "h2_"+(i+1) + "";
         var curtask = tasks_in[i];
         console.log(curtask);
-        document.getElementById(title).innerHTML=curtask.name;
         if (curtask.type == "takeaction") {
             // create button
+            document.getElementById(title).innerHTML=curtask.subject;
              var new_button = $('<button />')
                 .addClass('bluebutton')
                 .attr("value",true)
-                 .click(sendResponse(this))
+                .attr("onclick","sendResponse(this)")
                 .text(curtask.action)
                 //.mousedown(alert("hello")) //do something
                 .insertAfter( "."+title +"");
 
         
-    }                
+        }                
 
         
         else if (curtask.type=="select") {
+            document.getElementById(title).innerHTML=curtask.name;
             //create four selection buttons
-            for (var s = 0; s <=3; s++) {
+            for (var s = 0; s <curtask.options.length; s++) {
                  var new_button = $('<button />')
                 .addClass('smallbutton')
-                .attr("value",options[s])
+                .attr("value",curtask.options[s])
                 .text(curtask.options[s])
-                 .click(sendResponse(this))
+                .attr("onclick","sendResponse(this)")
                 .insertAfter( "."+title +"");
             }
                
@@ -70,6 +75,7 @@ function generateTask(tasks_in) {
         
         
         else if (curtask.type=="slider") {
+            document.getElementById(title).innerHTML=curtask.name;
             $("."+title +"").append("<p>amount:</p>"+"<p id='sliderTicker'>0</p>" );
             var new_button = $('<input />')
                 .attr({
@@ -89,21 +95,19 @@ function generateTask(tasks_in) {
 
 function updateTicker(button){
     $("#sliderTicker").text(button.value);
+    sendResponse(button);
 }
 
 
-function sendResponse(element){
-    var task_id = $("#task").attr(task_id);
-    gapi.hangout.data.submitDelta({task_id:element.value},[]);
-}
 
 function textIn(task) {
+    console.log("TASK :" + task);
     var finaltask = task.name;
+    console.log("TASK NAME " + finaltask);
     if (task.type=="select" || task.type=="slider") {
         finaltask = "set " + task.name + " to " + task.answer+"";
     }
     document.getElementById("task").innerHTML=finaltask;
     $('#task').attr( 'task_id',task.task_id );  //not actually 100% sure that this works. 
-
-    
+    updateProgressBar(task);
 }

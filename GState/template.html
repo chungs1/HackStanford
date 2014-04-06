@@ -1,17 +1,25 @@
 <html>
 <body>
-
+<!-- Panel.css -->
+<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/hackStanford.css" media="screen"/>
+<!-- Basic Javascript Libraries -->
 <script type="text/javascript" src="//www.google.com/jsapi"></script>
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
-<script type="text/javascript">google.load("jquery", "1.4.3");</script>
-
-<!-- WILL IMPORT OUR CODE FROM HERE. PLEASE CHANGE THE URL TO REFLECT 
-YOUR OWN CODE AND VERSION --> 
-<script src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/GameState.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="http://js.pusher.com/2.1/pusher.min.js"></script> 
 
+<!-- required Pusher library for the realtime magic  -->
+<script src="http://js.pusher.com/2.1/pusher.min.js"></script>
+
+
+<!-- Gamestate.js --> 
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/GameState.js"></script> 
+
+<!-- Panel.js -->
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/panel.js"></script> 
+
+
+<!-- Panel.css -->
+<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css" media="screen"/>
 
 
 <h3>Crucial Task: </h3><h3 id = "task"><span>|</span></h3>
@@ -40,4 +48,10 @@ YOUR OWN CODE AND VERSION -->
 </td>
     
 
+
+    
+<script>
+// Wait for gadget to load.                                                       
+gadgets.util.registerOnLoadHandler(init);
+</script>
 </body>
