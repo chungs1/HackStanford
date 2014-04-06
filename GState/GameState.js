@@ -8,6 +8,7 @@ function GameState() {
 	this.timeDur = 5000;
 	this.state = null;
 	this.metadata = null;
+	this.addedKeys = null;
 
 	//now we start
 	function start() {
@@ -44,14 +45,22 @@ function GameState() {
 
 	//this updates the render and sends instructions.
 	function update() {
-		checkTaskComplete
+		for (var i = 0; i < addedKeys.length; i++) {
+			var key = addedKeys[i];
+			checkTaskComplete();
+			sendNewFunc(
+		};
 
 		//if your health goes below;
 		if (this.overallHealth <= 0) {
 			end("YOU LOST!!!!!");
 		}
 
+		sendNewFunc();
 
+	}
+
+	function sendNewFunc() {
 
 	}
 
@@ -87,7 +96,8 @@ function GameState() {
 	}
 
 	function end(message) {
-		render("Lose"); //see the lose screen
+		//render("Lose"); //see the lose screen
+		console.log("YOU LOSE");
 	}
 
 
@@ -95,9 +105,10 @@ function GameState() {
 
 
 
-function updateLocalDataState(state, metadata, game) {
+function updateLocalDataState(state, metadata, addedKeys, game) {
 	game.state = state;
 	game.metadata = metadata;
+	game.addedKeys = addedKeys;
 
 	game.update(); //render based on this
 }
@@ -114,7 +125,6 @@ function updateLocalDataState(state, metadata, game) {
 				gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
           updateLocalDataState(stateChangeEvent.state,
                                stateChangeEvent.metadata, game);
-          game.update();
         });
 
         //if another person enters or leaves, abort the mission by ending
