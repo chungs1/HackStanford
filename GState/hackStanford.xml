@@ -11,7 +11,7 @@
 <body>
 
 <!-- Panel.css -->
-<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/hackStanford.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/panel.css" media="screen"/>
 
 
 <!-- Basic Javascript Libraries -->
@@ -33,7 +33,7 @@
 <!-- Panel.css -->
 <link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css" media="screen"/>
 
-
+<button class="startbutton" onclick="game.start()"> start</button> 
 <h3>Crucial Task: </h3><h3 id = "task"><span>|</span></h3>
 
 <hr>
