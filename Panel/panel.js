@@ -88,6 +88,10 @@ function updateTicker(button){
 }
 
 
+function sendResponse(element){
+    var task_id = $("#task").attr(task_id);
+    gapi.hangout.data.submitDelta({task_id:element.value},[]);
+}
 
 function textIn(task) {
     var finaltask = task.name;
