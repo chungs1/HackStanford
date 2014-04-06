@@ -19,21 +19,19 @@
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<!-- required Pusher library for the realtime magic  -->
-<script src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/pusher.js"></script>
-
 
 <!-- Gamestate.js --> 
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/GameState.js"></script> 
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/q38252kwovw3gk2/GameState.js"></script> 
 
 <!-- Panel.js -->
-<script type="text/javascript" src="https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/panel.js"></script> 
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/0olhwb994oq6xwg/panel.js"></script> 
 
 
 <!-- Panel.css -->
-<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/52559094/Panel/panel.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/s/zgzoordwnbvlnt8/panel.css" media="screen"/>
 
 <button class="startbutton" onclick="game.start()"> start</button> 
+
 <h3>Crucial Task: </h3><h3 id = "task"><span>|</span></h3>
 
 <hr>

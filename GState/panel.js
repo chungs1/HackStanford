@@ -37,9 +37,14 @@ function sendResponse(element){
 //task_in is Task json object (list of four)
 function generateTask(tasks_in) {
     console.log("hi " + tasks_in);
-    for (var i = 0; i<4; i++) {
+    //gapi.hangout.onParticipantsEnabled.add(function(stateChangeEvent) {var user_id = gapi.hangout.getLocalParticipantID();})
+    var user_id = gapi.hangout.getLocalParticipantID();
+    console.log("user_id in panel.js "+user_id);
+    for (var i in tasks_in.keys()) {
         //change title of each subpanel
-
+        if (tasks_in[i].user_id != user_id){
+            break;
+        }
 
         var title = "h2_"+(i+1) + "";
         var curtask = tasks_in[i];
