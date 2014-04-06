@@ -1,0 +1,49 @@
+[
+{
+	"name": "seduce male secretary",
+	"type": "takeaction",
+	"action": "seduce",
+	"subject": "male secretary"
+},
+{
+	"name": "break firewall",
+	"type": "takeaction",
+	"action": "break",
+	"subject": "firewall"
+
+},
+{
+	"name": "shit on Debra's desk",
+	"type": "takeaction",
+	"action": "shit on",
+	"subject": "Debra's desk"
+},
+{
+	"name": "TCP Port Scan",
+	"type": "button"
+},
+{
+	"name": "intrusion detection",
+	"type": "button"
+},
+{
+	"name": "Calbots invisishield",
+	"type": "select",
+	"options": [0,1,2,3]
+},
+{
+	"name": "bribe ",
+	"type": "slider",
+	"min_value":0,
+	"max_value":10
+},
+{
+	"name": "RSA attack",
+	"type": "button"
+},
+{
+	"name": "permissions",
+	"type": "select",
+	"options": [0,1,2,3]
+}
+]
