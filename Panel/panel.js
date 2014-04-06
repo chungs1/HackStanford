@@ -95,7 +95,7 @@ function textIn(task) {
         finaltask = "set " + task.name + " to " + task.answer+"";
     }
     document.getElementById("task").innerHTML=finaltask;
-    $('#'+task).attr( 'task_id',task.task_id );
+    $('#'+task).attr( 'task_id',task.task_id );  //not actually 100% sure that this works. 
 
     
 }
