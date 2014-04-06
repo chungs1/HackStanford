@@ -1,7 +1,7 @@
 function GameState() {
 	//this.level = 1;
 	console.log("start");
-	this.taskUrl = 'https://dl.dropboxusercontent.com/u/11657199/projects/HackStanford/GState/tasks.json'
+	this.taskUrl = 'https://dl.dropboxusercontent.com/u/52559094/GState/tasks.json'
 	this.win = false;
 	this.players = [];
 	this.overallHealth = 100;
@@ -24,12 +24,10 @@ function GameState() {
 	this.timeDur = 5000;
 	this.state = null;
 	this.metadata = null;
-	this.addedKeys = null;
+	this.addedKeys = [];
 
-	for(i=0;i<this.listOfFuncs.length;i++){
-		console.log("hi" + this.listOfFuncs[i].name);
-	}
-	var i = 0;
+	console.log("Arr " + this.listOfFuncs);
+	this.i = 0;
 
 	function initializeTask(task, userId){
 		task.task_id = i;
@@ -75,8 +73,8 @@ function GameState() {
 	this.update = function() {
 		var peopleID =  Object.keys(this.listOfPeopleWithTasks);
 
-		for (var i = 0; i < addedKeys.length; i++) {
-			var key = addedKeys[i];
+		for (var i = 0; i < this.addedKeys.length; i++) {
+			var key = this.addedKeys[i];
 			var name = this.listOfPeopleWithTasks[key].name;
 			checkTaskComplete(this.listOfExpirations[name]);
 			delete this.listOfExpirations[name];
@@ -86,12 +84,13 @@ function GameState() {
 			//if the person doesn't have a task, 
 			if(!this.listOfPeopleWithTasks[peopleID[i]]) {
 				var task = randomizeNum(peopleID[i]);
-				gapi.hangouts.data.setValue(task[0].name, JSON.stringify(task[0]));
+				gapi.hangout.data.setValue(task[0].name, JSON.stringify(task[0]));
 			}
 		} 
 
-		//remove from sharedstate old completed tasks
-		gapi.hangouts.data.submitDelta({}, addedKeys);
+		//remove from sharedstate old completed tasksole.
+		
+		gapi.hangout.data.submitDelta({}, this.addedKeys);
 
 
 		//if your health goes below;
@@ -117,8 +116,8 @@ function GameState() {
 	function randomizeFunc(person_id) {
 		var randomID = listOfFuncs[randomizeNum("func")];
 		var task = initializeTask(randomID, person_id);
-		var name_temp = randomID.name;
-		var itemToSend = {name_temp: task};
+		var name = randomID[name];
+		var itemToSend = {name: task};
 
 		this.listOfExpirations[randomID.name] = task;
 		this.listOfPeopleWithTasks[person_id] = true;
@@ -141,19 +140,18 @@ function GameState() {
 		alert("YOU LOSE");
 	}
 
-
 }
 
-
-
-function updateLocalDataState(state, metadata, addedKeys, game) {
-	game.state = JSON.parse(state);
-	game.metadata = JSON.parse(metadata);
+function updateLocalDataState(state, metadata, addedKeys) {
+	game.state = state;
+	game.metadata = metadata;
 	game.addedKeys = addedKeys;
 
 	game.update(); //render based on this
 }
 
+ var game = new GameState();
+/*
 (function() {
 	console.log("initializing..");
 	if(gapi && gapi.hangout) {
@@ -161,19 +159,19 @@ function updateLocalDataState(state, metadata, addedKeys, game) {
 		//initialize the hangout
 		var initHangout = function(apiInitEvent) {
 			if(apiInitEvent.isApiReady) {
-				var game = new GameState();
 				//when the state of the game changes, change the local state also
 				gapi.hangout.data.onStateChanged.add(function(stateChangeEvent) {
           updateLocalDataState(stateChangeEvent.state,
-                               stateChangeEvent.metadata, game);
+                               stateChangeEvent.metadata, stateChangeEvent.addedKeys);
         });
 
         //if there is no initial game state, then get the shared state
         if (!game.state) {
           var state = gapi.hangout.data.getState();
           var metadata = gapi.hangout.data.getStateMetadata();
+          var addedKeys = [];
           if (state && metadata) {
-            updateLocalDataState(state, metadata, game);
+            updateLocalDataState(state, metadata, addedKeys);
           }
         }
         gapi.hangout.onApiReady.remove(initHangout);
@@ -183,3 +181,4 @@ function updateLocalDataState(state, metadata, addedKeys, game) {
 		gapi.hangout.onApiReady.add(initHangout);
 	}
 })();
+*/
